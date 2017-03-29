@@ -1,0 +1,63 @@
+ <%= form_for [current_user, @listing] do |form| %>
+
+    <h2> Any name of your property? </h2>
+      <div class="text-field">
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+      </div>
+
+    <h2> How much is the rental per month? </h2>
+      <div class="text-field">
+        <%= form.label :price %>
+        <%= form.text_field :price %>
+      </div>
+
+    <h2> What is the type of your property? </h2>
+    <%= select("listing", "prop_type", Listing::PROP_TYPE) %>
+
+    <h2> What type of room is this? <h2>
+    <% Listing::ROOM_TYPE.each do |r| %>
+      <div class="radio">
+        <label><input type="radio" name="listing[room_type]" value="<%= r %>"><%= r %></label>
+      </div>
+    <% end %>
+
+    <h2> Where is the place? </h2>
+    <%= form.country_select("location") %>
+
+
+    <h2> Amenities </h2>
+    <%= form.collection_check_boxes(:amenity_ids, Amenity.all, :id, :name) do |a| %>
+      <div>
+        <%= a.check_box %>
+        <%= a.label do %>
+          <%= a.text %>
+        <% end %>
+        <div>
+          <%= a.object.description %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :images %><br>
+      <%= form.file_field :images, multiple: true %>
+      <% unless @listing.images.blank? %>
+        <ul>
+        <% @listing.images.each.with_index do |i, idx| %>
+          <li>
+            <%= image_tag i.thumb.url %>
+            <%= check_box_tag 'listing[remove_selected_images][]', idx %>
+          </li>
+        <% end %>
+        </ul>
+      <% end %>
+      <%= form.check_box :remove_images %> Remove all images
+    </div>
+
+    <div class="submit-field">
+      <%= form.submit %>
+    </div>
+
+<% end %>
+

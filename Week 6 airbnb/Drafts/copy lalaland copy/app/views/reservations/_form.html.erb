@@ -1,0 +1,27 @@
+<%= form_for ([@listing,@listing.reservations.new]) do |f| %>
+	<%= f.label :start_date %>:
+	<%= f.text_field :start_date, class:'start_date' %>
+	<%= f.label :end_date %>:
+	<%= f.text_field :end_date, class: 'end_date' %> 
+	<%=	f.hidden_field :listing_id ,value: @listing.id %>
+	<%= f.hidden_field :price, value: @listing.price %>
+	<br>
+
+	<%= f.submit "Book Now", class:"btn btn-primary" %>
+
+	<script type="text/javascript">	
+
+
+	  $(document).ready(function(){
+	    $('.start_date').datepicker({
+ 			format: 'dd/mm/yyyy'
+		});
+	    $('.end_date').datepicker({
+	    	format: 'dd/mm/yyyy'
+	    });
+	  });
+
+
+	</script>
+<% end %>
+

@@ -1,0 +1,59 @@
+
+<p> Location: <%= @listing.location %></p>
+<p> Price: <%= @listing.price %></p>
+<p> Property Type: <%= @listing.prop_type %></p>
+<p> Room Type: <%= @listing.room_type %></p>
+<p>Amenities: </p>
+<p> <% @listing.amenities.each do |a| %>
+<p> <%= a.name %> <p>
+<p> <%= a.description %> <p>
+<%end%>
+<p>
+		<strong>Image:</strong>
+</p>
+
+<div class="container-fluid text-center col-md-12" >
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" >
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <% @listing.images.each_with_index do |img, index| %>
+                  <li data-target="#carousel-example-generic" data-slide-to="<%=index%>" class=<%="active" if index == 0%>></li>
+            <%end%>
+        </ol>
+
+        <!-- WRAPPER FOR SLIDES -->
+        <div class="carousel-inner" role="listbox" >
+            <% @listing.images.each_with_index do |img, idx| %>
+                  <div class="item <%= "active" if idx == 0 %>" >
+                       <div><%= image_tag img.medium.url.to_s %></div>    
+                  </div>
+              <%end%>
+        </div>
+
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="icon-prev" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="icon-next" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+    </div>
+</div> 
+
+<div class="col-nd-4">
+  <%= render partial: 'reservations/form'%>
+</div>
+
+<% if current_user == @listing.user %>
+<%= button_to 'Destroy', user_listing_path(current_user, @listing.id), data: { confirm: 'Are you sure?'}, method: :delete %>
+<%= button_to 'Edit', edit_user_listing_path(current_user, @listing.id), data: { confirm: 'Are you sure?'}, method: :get %>
+<% end %>
+
+
+
+
+
+
+
+

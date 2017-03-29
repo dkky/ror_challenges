@@ -1,0 +1,13 @@
+Searching 331 files for "payement"
+
+/Users/desmondkang/Desktop/braintree/app/views/transactions/new.html.erb:
+   16          <div class="hosted-field" id="expiration-date"></div>
+   17  
+   18:         <%= form.hidden_field "payment_method_nonce" %>
+   19          <%= form.submit "Give me $10.00", disabled: true, class: "btn btn-primary" %>
+   20  
+
+/Users/desmondkang/Desktop/braintree/log/development.log:
+    <binary>
+
+2 matches across 2 files

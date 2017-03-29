@@ -1,0 +1,18 @@
+<h2> Your Listing is here, master <%= current_user.name %> </h2>
+
+<% @listing.each_with_index do |x,value| %>
+	<p><%= value + 1 %><p>
+	<p> Location: <%= x.location %></p>
+	<p> Price: <%= x.price %></p>
+	<p> Property Type: <%= x.prop_type %></p>
+	<p> Room Type: <%= x.room_type %></p>
+	<p>Amenities: </p>
+	<p> <% x.amenities.each do |a| %>
+	<p> <%= a.name %> <p>
+	<p> <%= a.description %> <p>
+	<% end %>
+	<%= button_to 'Destroy', user_listing_path(current_user, x.id),
+	            data: { confirm: 'Are you sure?'}, :method => :delete %>
+	<%= button_to 'Edit', edit_user_listing_path(current_user, x.id),
+	data: { confirm: 'Are you sure?'}, :method => :get %>
+<%end%>

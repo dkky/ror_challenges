@@ -1,0 +1,22 @@
+
+  
+<div class="row" id="clearance" class="password-reset">
+  <div class="col-md-6 col-md-offset-3 text-center">
+  <h2><%= t(".title") %></h2>
+
+  <p><%= t(".description") %></p>
+
+  <%= form_for :password_reset,
+        url: user_password_path(@user, token: @user.confirmation_token),
+        html: { method: :put } do |form| %>
+    <div class="form-group" class="password-field">
+      <%= form.label :password %>
+      <%= form.password_field :password, autofocus: true, autocomplete: "off", :class => "form-control", :placeholder => "New Password" %>
+    </div>
+
+    <div class="submit-field">
+      <%= form.submit "Change My Password" , :class => "btn btn-danger" %>
+    </div>
+  <% end %>
+  </div>
+</div>

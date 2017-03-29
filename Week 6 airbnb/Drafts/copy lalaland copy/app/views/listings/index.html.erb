@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-3 col-md-offset-5">
+		<% @listings.each_with_index do |list,index| %>
+		<p><%= index + 1 %></p>
+		<p><%= list.user.name %> posted: </p>
+		<p> Name: <%= link_to list.name , user_listing_path(current_user,list.id) %></p>
+		<p> Location: <%= list.location %></p>
+		<p> Price (RM): <%= list.price %></p>
+		<p> Property Type: <%= list.prop_type %></p>
+		<p> Room Type: <%= list.room_type %></p>
+		<%end %>
+  </div>
+</div>
+
+<div class="col-md-3 col-md-offset-5">
+    <% (1..@total_pages).each do |page| %>
+        <%= link_to page, controller: "listings", action: "index", page: page %>&nbsp;
+    <% end %>
+</div>
+
+

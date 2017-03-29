@@ -1,0 +1,215 @@
+
+<nav id='navbar' class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/home/index">Lalaland</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <% if signed_in? %>
+          <li class="active"><a href="/users/<%= current_user.id%>/listings">All Listings <span class="sr-only">(current)</span></a></li>
+        <% end %>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      	<% if signed_in? -%>
+      		<li><%= link_to t(".sign_out"), sign_out_path, method: :delete %></li>
+          <li><%= link_to 'Become a Host', new_user_listing_path(current_user) %></li>
+      	<% else %>
+        	<li><a href="#" data-toggle="modal" data-target=".bs-modal-sm">Sign In</a></li>
+        <% end %>
+        <% if signed_in? %>
+	        <li class="dropdown">
+
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+                Welcome, <strong><%= current_user.name %></strong> <span class="glyphicon glyphicon-user"></span> 
+                <% unless current_user.avatar.blank? %>
+                  <%= image_tag current_user.avatar.thumb.url, id:"profile-pic"%>
+                <%end%>
+                <span class="caret"></span>
+            </a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Setting</a></li>
+	            <li><a href="/users/<%= current_user.id%>/edit"> Edit Profile</a></li>
+	            <li><a href="/users/<%= current_user.id%>/my_listing" >My Listing</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	          </ul>
+	        </li>
+        <% end %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+  <div id="flash">
+    <% flash.each do |key, value| -%>
+      <div id="flash_<%= key %>"><%=h value %></div>
+    <% end %>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <br>
+        <div class="bs-example bs-example-tabs">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
+              <li class=""><a href="#signup" data-toggle="tab">Register</a></li>
+              <li class=""><a href="#why" data-toggle="tab">Why?</a></li>
+            </ul>
+        </div>
+      <div class="modal-body">
+        <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in" id="why">
+        <p>We need this information so that you can receive access to the site and its content. Rest assured your information will not be sold, traded, or given to anyone.</p>
+        <p></p><br> Please contact <a mailto:href="JoeSixPack@Sixpacksrus.com"></a>JoeSixPack@Sixpacksrus.com</a> for any other inquiries.</p>
+        </div>
+        <div class="tab-pane fade active in" id="signin">
+            <form class="form-horizontal" action="/session" method="post" >
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                <fieldset>
+                    <!-- Sign In Form -->
+                    <!-- Text input-->
+                    <div class="control-group">
+                      <label class="control-label" for="userid">Email:</label>
+                      <div class="controls">
+                        <input required="" id="userid" name="session[email]" type="text" class="form-control" placeholder="JoeSixpack" class="input-medium" required="">
+                      </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="control-group">
+                      <label class="control-label" for="passwordinput">Password:</label>
+                      <div class="controls">
+                        <input required="" id="passwordinput" name="session[password]" class="form-control" type="password" placeholder="********" class="input-medium">
+                      </div>
+                    </div>
+
+                    <!-- Multiple Checkboxes (inline) -->
+                    <div class="control-group">
+                      <label class="control-label" for="rememberme"></label>
+                      <div class="controls">
+                        <label class="checkbox inline" for="rememberme-0">
+                          <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
+                          Remember me
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="control-group">
+                      <label class="control-label" for="signin"></label>
+                      <div class="controls">
+                        <button type="submit" id="signin" name="signin" class="btn btn-success">Sign In</button>
+                      </div>
+                    </div>
+                          <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i> Sign in with Facebook
+                          </a>
+                    <%= link_to t(".forgot_password"), new_password_path %>
+                    <%= link_to 'Facebook Login?', '/auth/facebook' %>
+
+                </fieldset>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="signup">
+            <form class="form-horizontal" action="/users" method="post">
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                <fieldset>
+                <!-- Sign Up Form -->
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="Email">Email:</label>
+                  <div class="controls">
+                    <input id="Email" name="user[email]" class="form-control" type="text" placeholder="JoeSixpack@sixpacksrus.com" class="input-large" required="">
+                  </div>
+                </div>
+                
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="userid">First_Name:</label>
+                  <div class="controls">
+                    <input id="userid" name="user[first_name]" class="form-control" type="text" placeholder="Joe" class="input-large" required="">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="userid">Last_Name:</label>
+                  <div class="controls">
+                    <input id="userid" name="user[last_name]" class="form-control" type="text" placeholder="SixPack" class="input-large" required="">
+                  </div>
+                </div>
+                
+                <!-- Password input-->
+                <div class="control-group">
+                  <label class="control-label" for="password">Password:</label>
+                  <div class="controls">
+                    <input id="password" name="user[password]" class="form-control" type="password" placeholder="********" class="input-large" required="">
+                    <em>1-8 Characters</em>
+                  </div>
+                </div>
+                
+                <!-- Text input-->
+                <div class="control-group">
+                  <label class="control-label" for="reenterpassword">Re-Enter Password:</label>
+                  <div class="controls">
+                    <input id="reenterpassword" class="form-control" name="password_confirmation" type="password" placeholder="********" class="input-large" required="">
+                  </div>
+                </div>
+                
+                <!-- Multiple Radios (inline) -->
+                <br>
+                <div class="control-group">
+                  <label class="control-label" for="humancheck">Humanity Check:</label>
+                  <div class="controls">
+                    <label class="radio inline" for="humancheck-0">
+                      <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot</label>
+                    <label class="radio inline" for="humancheck-1">
+                      <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human</label>
+                  </div>
+                </div>
+                
+                <!-- Button -->
+                <div class="control-group">
+                  <label class="control-label" for="confirmsignup"></label>
+                  <div class="controls">
+                    <button type="submit" id="confirmsignup" name="confirmsignup" class="btn btn-success">Sign Up</button>
+                  </div>
+                </div>
+                </fieldset>
+            </form>
+      </div>
+    </div>
+      </div>
+      <div class="modal-footer">
+      <center>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>

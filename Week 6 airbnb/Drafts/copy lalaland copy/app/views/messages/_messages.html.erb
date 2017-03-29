@@ -1,0 +1,15 @@
+<% @messages.each do |message| %>
+	<div class="panel">
+		<div class="panel-body">
+			image_tag 
+			<strong><%= message.user.name %></strong>
+
+			<span class="pull-right"><%= message.message_time %></span>
+			<br>
+			<div class="row-space-2">
+				<%= message.content %>
+			</div>
+		</div>
+	</div>
+
+<% end %>
